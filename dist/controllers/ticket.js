@@ -71,16 +71,11 @@ const importExcel = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     let workbook_sheet = workbook.SheetNames; // Step 3
     let workbook_response = xlsx_1.default.utils.sheet_to_json(// Step 4
     workbook.Sheets[workbook_sheet[0]]);
-    let i = 0;
     for (const iterator of workbook_response) {
-        ++i;
-        if (i === 1) {
-            continue;
-        }
         const ticket = new ticket_1.default({
-            name: iterator["__EMPTY_1"] + iterator["__EMPTY_2"] + " " + iterator["__EMPTY_3"],
-            tableNumber: iterator["__EMPTY_5"],
-            couple: false
+            name: iterator["Title"] + iterator["Calling Name"] + " " + iterator["Surname"],
+            tableNumber: iterator["Table Nos."],
+            couple: iterator["Couple"] === "y" ? true : false
         });
         ticket.save();
     }
